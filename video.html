@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Stream Demo</title>
+</head>
+<body>
+  <div class="columns">
+    <div class="column">
+      <p>
+        <button type="button" onclick="getStream('video')">Grab video</button>
+      </p>
+      <video controls autoplay style="height:180px; width:240px;"></video>
+    </div>
+    <div class="column">
+      <p>
+        <button type="button" onclick="getStream('audio')">Grab audio</button>
+      </p>
+      <audio controls></audio>
+    </div>
+  </div>
+
+  <script>
+    function getUserMedia(constraints) {
+      // Check if modern API is available
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        return navigator.mediaDevices.getUserMedia(constraints);
+      }
+
+      // Fallback to legacy API
+      var legacyApi =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia;
+
+      if (legacyApi) {
+        return new Promise(function (resolve, reject) {
+          legacyApi.bind(navigator)(constraints, resolve, reject);
+        });
+      }
+
+      return Promise.reject(new Error('User Media API not supported.'));
+    }
+
+    function getStream(type) {
+      // Check browser compatibility
+      if (
+        !navigator.mediaDevices &&
+        !navigator.getUserMedia &&
+        !navigator.webkitGetUserMedia &&
+        !navigator.mozGetUserMedia &&
+        !navigator.msGetUserMedia
+      ) {
+        alert('User Media API is not supported by your browser.');
+        return;
+      }
+
+      // Define constraints based on type
+      var constraints = {};
+      constraints[type] = true;
+
+      getUserMedia(constraints)
+        .then(function (stream) {
+          // Get the corresponding media element
+          var mediaControl = document.querySelector(type === 'video' ? 'video' : 'audio');
+
+          if ('srcObject' in mediaControl) {
+            mediaControl.srcObject = stream;
+          } else if (navigator.mozGetUserMedia) {
+            mediaControl.mozSrcObject = stream;
+          } else {
+            mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);
+          }
+
+          mediaControl.play();
+        })
+        .catch(function (err) {
+          alert('Error accessing ' + type + ': ' + err.message);
+        });
+    }
+  </script>
+</body>
+</html>
