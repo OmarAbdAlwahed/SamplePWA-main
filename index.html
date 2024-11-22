@@ -8,6 +8,37 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <title>Arbeitstage bis Ende des Jahres</title>
+    <style>
+        /* Sticky Footer Styling */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #004d40;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .sticky-footer a {
+            margin: 0 10px;
+            padding: 10px 20px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #00796b;
+        }
+
+        .sticky-footer a:hover {
+            background-color: #004d40;
+        }
+
+        body {
+            padding-bottom: 60px; /* Platz für den Sticky Footer */
+        }
+    </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const endOfYearDate = new Date('2024-12-31');
@@ -38,11 +69,6 @@
     <nav>
         <div class="nav-wrapper teal darken-3">
             <a href="#" class="brand-logo center">Arbeitstage Zähler</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="video.html">Video Demo</a></li>
-                <li><a href="geolocation.html">Geolocation Demo</a></li>
-                <li><a href="deviceorientation.html">Device Orientation Demo</a></li>
-            </ul>
         </div>
     </nav>
 
@@ -54,12 +80,14 @@
                     <p class="flow-text">Arbeitstage bis zum Ende des Jahres (31. Dezember): <span id="days-to-end-of-year" class="teal-text text-darken-3"></span></p>
                 </div>
             </div>
-            <!-- Zusätzliche Buttons -->
-            <div class="center-align" style="margin-top: 20px;">
-                <a class="btn teal darken-3" href="geolocation.html">Geolocation Demo</a>
-                <a class="btn teal darken-3" href="deviceorientation.html">Device Orientation Demo</a>
-            </div>
         </div>
+    </div>
+
+    <!-- Sticky Footer -->
+    <div class="sticky-footer center-align">
+        <a href="video.html">Video Demo</a>
+        <a href="geolocation.html">Geolocation Demo</a>
+        <a href="deviceorientation.html">Device Orientation Demo</a>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
